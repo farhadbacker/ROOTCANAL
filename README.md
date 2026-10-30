@@ -208,6 +208,35 @@ npm run build
 npm run preview
 ```
 
+## Run in Google AI Studio
+
+If you want to run the app in Google AI Studio instead of a local terminal, follow these steps:
+
+1. Open the project in Google AI Studio or create a new app from this repository.
+2. In the app settings or environment variables, add your Gemini API key.
+3. Use the key name expected by your environment:
+   - For AI Studio template usage, `GEMINI_API_KEY` is commonly used.
+   - For this project’s frontend code, the app reads `process.env.API_KEY` in `services/geminiService.ts`, so local execution should use:
+
+```env
+API_KEY=your_gemini_api_key_here
+```
+
+4. Start or preview the app from the AI Studio interface.
+5. Open the generated local preview URL or app link to use the dental X-ray analysis tool.
+
+Example AI Studio flow:
+
+```text
+1. Open Google AI Studio
+2. Import this project
+3. Add the Gemini API key
+4. Run the app
+5. Upload an X-ray image for analysis
+```
+
+> Note: This project still needs the Python Flask backend running for model inference. If you are using AI Studio only for the frontend, make sure the inference server is available and reachable on `http://localhost:5000`.
+
 ## Notes
 
 This project includes both machine learning inference and a user interface for clinical image review. For best results, use a machine with GPU support if available, but CPU mode is also supported for lighter testing and local development.
