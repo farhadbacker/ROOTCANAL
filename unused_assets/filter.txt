@@ -1,0 +1,114 @@
+ C. APPLIED FILTERING METHODS
+ In this research, multiple image filtering techniques, i.e.,
+ Mean, Median, Contourlet Transform, Bayesian, Non-local,
+ and Gaussian, are applied to improve the employed dataset.
+ Each subsection explains a specific filtering method and its
+ mathematical basis.
+ 1) MEAN
+ The mean filter is a familiar image processing method
+ used in object detection to reduce noise and smooth
+ images. It replaces each pixel’s value with the average of
+ its neighboring pixels within a specified kernel window.
+ Mathematically, for a kernel of size m × n, the mean filter
+ computes the average intensity at pixel location (x,y) as:
+ M(x,y) = 1
+ mn 
+k
+ i=−k
+ k
+ j=−k
+ I(x +i,y +j)
+ (1)
+ where I(x + i,y + j) represents the intensity of the pixel at
+ coordinates (x + i,y + j) in the image.
+ 2) MEDIAN
+ The median filter is a widely used technique in object
+ detection for noise reduction and preserving edge details.
+ It replaces each pixel’s value with the median value of
+ its neighboring pixels within a defined kernel window.
+ Mathematically, for a kernel of size m × n, the median filter
+ computes the median intensity at pixel location (x,y) as:
+ M(x,y) = median I(x +i,y+j) | i = −k,...,k,
+ j = −k,...,k
+ where I(x + i,y + j) denotes the intensity of the pixel at
+ coordinates (x + i,y + j) in the image.
+ 3) CONTOURLET TRANSFORM
+ While conventional methods for object detection often rely
+ on wavelet transforms, the Contourlet Transform (CT) offers
+ 66561
+ VOLUME 13, 2025
+A. Z. Apurba et al.: Fusion of Image Filtering and Knowledge-Distilled YOLO Models
+ distinct advantages due to its superior ability to capture
+ curvilinear image structures. DFB filters utilize directional
+ f
+ ilters like Gabor filters, which can be expressed as:
+ h(x,y) = g(x,y) · exp(j2πWx)
+ (2)
+ where h(x,y) is the directional filter, g(x,y) is a windowing
+ function (e.g., Gaussian), and W defines the center frequency
+ in the frequency domain.
+ 4) BAYESIAN
+ The Bayesian Wavelet denoising algorithm is a sophisticated
+ method for effectively reducing image noise that combines
+ wavelet transform with Bayesian statistical principles. Math
+ematically, the Bayesian wavelet denoising process adjusts
+ wavelet coefficients Wj,k iteratively based on a Bayesian
+ model:
+ ˆ
+ Wj,k = argmax
+ Wj,k 
+P(Wj,k|data, σ2)
+ (3)
+ where ˆWj,k represents the denoised wavelet coefficient
+ at scale j and position k, P(Wj,k|data,σ2) illustrates the
+ posterior probability of Wj,k given the data and noise variance
+ σ2.
+ 5) NON-LOCAL
+ The non-local mean (NLM) filter is an advanced image
+ processing technique used in object detection to reduce noise
+ and enhance fine details. This method computes the intensity
+ at each pixel (x,y) as a weighted average of intensities from
+ all pixels in the image, where weights are determined by
+ the similarity between patches centered at (x,y) and other
+ pixels. Mathematically, the non-local mean filter computes
+ the filtered intensity N(x,y) at pixel location (x,y) as:
+ N(x,y) = 1
+ C(x,y) p∈
+ I(p) · w(p,x,y)
+ (4)
+ where I(p) denotes the intensity of the pixel at position p in
+ the image, istheentire image domain, w(p,x,y) represents
+ the weight based on patch similarity between patches
+ centered at (p) and (x,y), and C(x,y) is the normalization
+ factor ensuring the sum of weights equals one.
+ 6) GAUSSIAN
+ Gaussian filtering is a fundamental preprocessing technique
+ in object detection, employing a kernel defined by a Gaussian
+ distribution to convolve with the image. The one-dimensional
+ Gaussian function is expressed as:
+ G(x) = 1
+ √
+ 2πσ2 
+·exp −(x −µ)2
+ 2σ2
+ (5)
+ This filter reduces noise and preserves critical features
+ by weighting pixel intensities based on their proximity to
+ the kernel center. In two dimensions Gaussian function is
+ expressed as:
+ G(x,y) = 1
+ 2πσ2 ·exp −(x −µ)2 +(y−µ)2
+ 2σ2
+ 66562
+ (6)
+ σ controls the filter’s spread; larger σ values enhance
+ smoothing but may blur edges crucial for object detection,
+ while smaller σ values retain finer details but offer less noise
+ reduction.
+ Figure 4, Figure 4a, Figure 4b, Figure 4c, Figure 4d,
+ Figure 4e, andFigure4fdemonstratethe original noisy image
+ ontheleftsideandfilteredwithvariousfilteringmethods,i.e.,
+ Mean, Median, Contourlet Transform, Bayesian, Non-local,
+ and Gaussian, respectively, on the right side. It is a sample
+ example that shows how the image will transform with its
+ pixel values after the application of filtering.

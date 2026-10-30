@@ -1,0 +1,7 @@
+path: .
+train: "Root Canal.v1i.yolov8/train/images"
+val: "Root Canal.v1i.yolov8/valid/images"
+test: "Root Canal.v1i.yolov8/test/images"
+
+nc: 4
+names: ['No Endodontic Treatment', 'Complete Endodontic Treatment', 'Incomplete Endodontic Treatment', 'Total Endodontic Failure']

@@ -1,0 +1,5 @@
+train: dataset/images
+val: dataset/images
+
+nc: 4
+names: ['No Endodontic Treatment', 'Incomplete Endodontic Treatment', 'Complete Endodontic Treatment', 'Total Endodontic Failure']

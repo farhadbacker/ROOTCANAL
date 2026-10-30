@@ -1,0 +1,5 @@
+{
+  "name": "Root Canal AI Diagnostics",
+  "description": "An AI-powered tool to assist in the diagnosis of root canal failures from dental radiographs, based on the research paper 'Fusion of Image Filtering and Knowledge-Distilled YOLO Models'.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,9 @@
+path: C:\Users\PRO\Desktop\Root Canal\Root-canal-AI-diagnostics\pseudo_dataset
+train: train/images
+val: valid/images
+nc: 4
+names:
+- No Endodontic Treatment
+- Complete Endodontic Treatment
+- Incomplete Endodontic Treatment
+- Total Endodontic Failure

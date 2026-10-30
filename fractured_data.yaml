@@ -1,0 +1,13 @@
+path: "fractured datset\\Dental OPG XRAY Dataset\\Dental OPG XRAY Dataset\\Dental OPG (Object Detection)\\Augmented Dataset"
+train: "train/images"
+val: "valid/images"
+test: "test/images"
+
+nc: 6
+names: 
+  0: "Impacted Teeth"
+  1: "Infection"
+  2: "Caries"
+  3: "Fractured Teeth"
+  4: "BDC-BDR"
+  5: "Healthy Teeth"

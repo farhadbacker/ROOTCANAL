@@ -1,0 +1,38 @@
+Loading model: c:\Users\PRO\Desktop\Root Canal\Root-canal-AI-diagnostics\distillation_results_v2\student_kd_true\weights\best.pt
+Running validation...
+Ultralytics 8.3.228  Python-3.13.5 torch-2.9.1+cpu CPU (11th Gen Intel Core i7-1185G7 @ 3.00GHz)
+Model summary (fused): 72 layers, 3,006,428 parameters, 0 gradients, 8.1 GFLOPs
+[34m[1mval: [0mFast image access  (ping: 0.10.2 ms, read: 199.072.3 MB/s, size: 67.8 KB)
+[K[34m[1mval: [0mScanning C:\Users\PRO\Desktop\Root Canal\Root-canal-AI-diagnostics\Root Canal.v1i.yolov8\valid\labels.cache... 85 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 85/85 8.1Mit/s 0.0s[K[34m[1mval: [0mScanning C:\Users\PRO\Desktop\Root Canal\Root-canal-AI-diagnostics\Root Canal.v1i.yolov8\valid\labels.cache... 85 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 85/85 80.2Kit/s 0.0s
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 17% ━━────────── 1/6 15.4s/it 4.6s<1:17[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 33% ━━━━──────── 2/6 8.2s/it 8.5s<32.9s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 50% ━━━━━━────── 3/6 5.4s/it 11.6s<16.2s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 67% ━━━━━━━━──── 4/6 4.8s/it 15.3s<9.5s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 83% ━━━━━━━━━━── 5/6 3.9s/it 18.1s<3.9s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 6/6 3.2s/it 19.0s[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 6/6 3.2s/it 19.0s
+                   all         85        158       0.39      0.309      0.257      0.138
+Speed: 2.9ms preprocess, 196.2ms inference, 0.0ms loss, 1.2ms postprocess per image
+Results saved to [1mC:\Users\PRO\Desktop\Root Canal\Root-canal-AI-diagnostics\runs\detect\val42[0m
+
+Confusion Matrix Shape: (5, 5)
+[[          7           2           0           0           2]
+ [          2           9           2           0          10]
+ [          4           9          13           5          22]
+ [          9           4           4          15          55]
+ [         19          21          19          14           0]]
+
+Class Mapping: {0: 'Class 0- No endodontic treatment', 1: 'Class 1- complete endodontic treatment', 2: 'Class 2- incomplete endodontic treatment', 3: 'cavity'}
+
+Medical Metrics:
+--------------------------------------------------
+Class: Class 0- No endodontic treatment
+  Sensitivity (Recall): 0.6364
+  Specificity:          0.8559
+--------------------------------------------------
+Class: Class 1- complete endodontic treatment
+  Sensitivity (Recall): 0.3913
+  Specificity:          0.8393
+--------------------------------------------------
+Class: Class 2- incomplete endodontic treatment
+  Sensitivity (Recall): 0.2453
+  Specificity:          0.8711
+--------------------------------------------------
+Class: cavity
+  Sensitivity (Recall): 0.1724
+  Specificity:          0.8812
+--------------------------------------------------

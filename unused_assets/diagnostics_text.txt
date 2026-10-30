@@ -1,0 +1,176 @@
+Total pages: 14
+--- Page 1 ---
+Academic Editor: Fakhar Abbas
+Received: 3 March 2025
+Revised: 10 April 2025
+Accepted: 12 April 2025
+Published: 16 April 2025
+Citation: Bennasar, C.;
+Nadal-Martínez, A.; Arroyo, S.;
+Gonzalez-Cid, Y.; López-González,
+Á.A.; Tárraga, P .J. Integrating Machine
+Learning and Deep Learning for
+Predicting Non-Surgical Root Canal
+Treatment Outcomes Using Two-
+Dimensional Periapical Radiographs.
+Diagnostics 2025, 15, 1009. https://
+doi.org/10.3390/diagnostics15081009
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Article
+Integrating Machine Learning and Deep Learning for Predicting
+Non-Surgical Root Canal Treatment Outcomes Using
+Two-Dimensional Periapical Radiographs
+Catalina Bennasar 1, *
+ , Antonio Nadal-Martínez 2
+ , Sebastiana Arroyo 1
+ , Yolanda Gonzalez-Cid 3
+ ,
+Ángel Arturo López-González 4
+ and Pedro Juan Tárraga 5
+1 Academia Dental de Mallorca (ADEMA), School of Dentistry, University of Balearic Islands,
+07122 Palma de Mallorca, Spain; s.arroyo@eua.edu.es
+2 Soft Computing, Image Processing and Aggregation (SCOPIA) Research Group, University of the Balearic
+Islands (UIB), 07122 Palma de Mallorca, Spain; antonio.nadal@uib.cat
+3 Department of Mathematical Sciences and Informatics, University of the Balearic Islands,
+07120 Palma de Mallorca, Spain; yolanda.gonzalez@uib.es
+4 ADEMA-Health Group, University Institute of Health Sciences of Balearic Islands (IUNICS),
+02008 Palma de Mallorca, Spain; angarturo@gmail.com
+5 Faculty of Medicine, University of Castilla-La Mancha, 02001 Albacete, Spain; pjtarraga@sescam.jccm.es
+* Correspondence: c.bennasar@eua.edu.es; Tel.: +34-626-388-003
+Abstract: Background/Objectives: In a previous study, we utilized categorical variables
+and machine learning (ML) algorithms to predict the success of non-surgical root canal
+treatments (NSRCTs) in apical periodontitis (AP), classifying the outcome as either success
+(healed) or failure (not healed). Given the importance of radiographic imaging in diagno-
+sis, the present study evaluates the efficacy of deep learning (DL) in predicting NSRCT
+outcomes using two-dimensional (2D) periapical radiographs, comparing its performance
+with ML models. Methods: The DL model was trained and validated using leave-one-out
+cross-validation (LOOCV). Its output was incorporated into the set of categorical variables,
+and the ML study was reproduced using backward stepwise selection (BSS). The chi-square
+test was applied to assess the association between this new variable and NSRCT outcomes.
+Finally, after identifying the best-performing method from the ML study reproduction,
+statistical comparisons were conducted between this method, clinical professionals, and
+the image-based model using Fisher’s exact test. Results: The association study yielded
+a p-value of 0.000000127, highlighting the predictive capability of 2D radiographs. After
+incorporating the DL-based predictive variable, the ML algorithm that demonstrated the
+best performance was logistic regression (LR), differing from the previous study, where
+random forest (RF) was the top performer. When comparing the deep learning–logistic
+regression (DL-LR) model with the clinician’s prognosis (DP), DL-LR showed superior
+performance with a statistically significant difference (p-value < 0.05) in sensitivity, NPV ,
+and accuracy. The same trend was observed in the DL vs. DP comparison. However, no
+statistically significant differences were found in the comparisons of RF vs. DL-LR, RF vs.
+DL, or DL vs. DL-LR. Conclusions: The findings of this study suggest that image-based
+artificial intelligence models exhibit superior predictive capability compared with those
+relying exclusively on categorical data. Moreover, they outperform clinician prognosis.
+Keywords: machine learning; deep learning; outcome prediction; non-surgical root canal
+treatment; apical periodontitis
+Diagnostics 2025, 15, 1009 https://doi.org/10.3390/diagnostics15081009
+--- Page 2 ---
+Diagnostics 2025, 15, 1009 2 of 14
+1. Introduction
+Over the past decade, ML and DL have emerged as transformative technologies with
+significant impacts across multiple scientific disciplines. These techniques, as branches of
+artificial intelligence (AI), have become essential tools for analyzing large volumes of data,
+identifying complex patterns, and providing innovative solutions to previously intractable
+problems. Their relevance has been particularly emphasized in health sciences, including
+medicine, biology, and, more recently, dentistry, where their application holds the potential
+to optimize diagnostics, personalize treatments, and improve clinical outcomes.
+ML can be defined as a subfield of AI that employs algorithms to enable machines
+to learn patterns and behaviors from data without being explicitly programmed for each
+specific task (Samuel, 1959 [ 1]). Within this field, DL represents a significant evolution,
+utilizing artificial neural networks with multiple layers capable of learning hierarchical
+data representations. These deep architectures have proven especially effective in tasks
+involving large datasets and complex features, such as medical image interpretation, disease
+prediction, and biological signal analysis [2].
+The current utility of ML and DL in health sciences is demonstrated in a wide range of
+applications, including but not limited to medical image analysis, genomic data mining,
+drug modeling, and clinical outcome prediction. For instance, in radiology, convolutional
+neural networks (CNNs) have been successfully employed to detect tumor lesions in
+computed tomography (CT) and magnetic resonance imaging (MRI) scans, achieving
+accuracy levels comparable to those of human experts [ 3]. In genomics, DL algorithms
+have facilitated the decoding of complex gene interactions, accelerating the development
+of personalized therapies [4].
+In the field of dentistry, the impact of ML and DL is beginning to solidify with
+promising applications. Dentistry, as a health science, has undergone significant digital
+transformation in recent years, driven by technologies such as cone-beam computed to-
+mography (CBCT), three-dimensional (3D) printing, and CAD/CAM systems. However,
+the integration of ML and DL in this domain has opened new avenues for diagnosis, treat-
+ment design, and disease monitoring. For example, DL algorithms have been effective in
+identifying dental caries [5], fractures, periodontal diseases [6], and periapical conditions
+from digital radiographs, enhancing diagnostic accuracy and reducing variability among
+professionals [7].
+Beyond diagnostics, these technologies are beginning to influence treatment planning
+and execution. In orthodontics, for example, ML is used to predict tooth movement and
+optimize the placement of brackets or aligners, leading to more effective and personalized
+treatments [8]. In implantology, ML models assist in predicting dental implant stability
+over time by considering factors such as bone density, implant location, and patient char-
+acteristics [9]. In endodontics, AI supports professionals by detecting periapical lesions,
+identifying root fractures, analyzing root canal morphology, predicting retreatment needs,
+and aiding in regenerative pulpal therapy, all of which contribute to improved diagnostics,
+treatment planning, and patient care [10–16].
+The future of ML and DL in health sciences, particularly in dentistry, promises to be
+even more revolutionary. It is anticipated that the combination of these technologies with
+advanced sensor systems and data from wearable devices will enable continuous, real-time
+monitoring of oral health. For example, the integration of DL with intraoral connected
+devices could facilitate the early detection of diseases such as oral cancer through the
+analysis of salivary biomarkers or intraoral images [17]. Additionally, the development of
+explainable AI (XAI) systems could address one of the most pressing current challenges: the
+need to provide clear and interpretable explanations of algorithm-generated predictions,
+fostering clinical acceptance and ethical use [18].
+--- Page 3 ---
+Diagnostics 2025, 15, 1009 3 of 14
+Despite these promises, the implementation of ML and DL in clinical practice faces
+significant challenges that must be addressed to ensure success. These include the need for
+large volumes of high-quality data for model training, ethical and legal concerns related
+to data privacy, and the necessity of educating healthcare professionals in the use of these
+technologies. These challenges highlight the importance of interdisciplinary collaboration
+involving researchers, technology developers, clinicians, and policymakers [19,20].
+2. Study Objectives
+To evaluate DL as an additional variable in an ML study for predicting NSRCTs in
+cases of AP . This study aims to determine the extent to which deep neural networks can
+predict the outcome of NSRCTs in teeth with apical periodontitis using digital periapical
+radiographs of confirmed AP diagnoses.
+3. Materials and Methods
+3.1. Sample Selection
+A retrospective study was conducted based on the analysis of clinical records of
+patients with AP who underwent NSRCTs for the first time (not retreatments). Cases were
+randomly selected from the database of a private clinic in Mallorca, Spain. Only patients
+without reported systemic diseases [21] who received treatment for the first time and whose
+records included the following were included:
+A comprehensive medical and dental history with general, facial, and oral inspection
+reports, as well as dental percussion and palpation examinations.
+Results of complementary tests, such as thermal sensitivity testing using an ice pencil
+and periapical radiography.
+A follow-up period of at least nine years, starting six months after treatment, with
+documented evaluations of lesion recovery, categorizing cases as successful (0: there are no
+symptoms or indications for further treatments, and the lesion disappears after NSRCT) or
+failed (1: the failure occurs when either the clinical or radiographic outcome fails).
+Radiographs were acquired using an X Mind Unity Acteon Satelec system with a focal
+point of 0.4 mm, at 70 kV and 7 mA, employing a Carestream 6100 digital system with a res-
+olution of 15 LP/mm. The bisecting angle technique was used with a Rinn XCD (Dentsply)
+positioner (Dentsply, Charlotte, NC, USA) [22]. Patients with vertical root fractures or teeth
+without sufficient ferrule structure for subsequent restoration were excluded.
+Due to this filtering process, the final number of patients included in this study was
+reduced to 119. Patient consent was waived due to the inability to identify participants
+in the database. The Research Ethics Committee of the Balearic Islands (IB4015/19IP)
+approved this study.
+3.2. Intervention Procedure
+The 119 patients with confirmed AP , for whom eight preoperative domain variables
+were observed as per a recommended data collection template (DCT) for endodontic treat-
+ment evaluation studies [23–25], underwent standardized endodontic treatment performed
+by the same endodontist using identical materials and procedures. The following phases
+were followed:
+Local anesthesia administration and rubber dam placement.
+Chamber access and pre-enlargement of the coronal third, followed by apical
+third negotiation.
+Working length determination using a Morita apex locator (Morita, Tokyo, Japan)
+and radiographic confirmation. The working length was always set at the radiographic
+apex level.
+--- Page 4 ---
+Error: 'charmap' codec can't encode character '\ufb01' in position 1576: character maps to <undefined>

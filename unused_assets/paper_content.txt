@@ -1,0 +1,247 @@
+Total pages: 17
+--- Page 1 ---
+Received 27 March 2025, accepted 10 April 2025, date of publication 15 April 2025, date of current version 22 April 2025.
+Digital Object Identifier 10.1 109/ACCESS.2025.3560998
+Fusion of Image Filtering and
+Knowledge-Distilled YOLO Models for
+Root Canal Failure Diagnosis
+AFIFA ZAIN APURBA
+ , MD FAHIM SHAHORIAR TITU
+, MAHIR AFSER PAVEL
+,
+INTISAR TAHMID NAHEEN
+ , AND RIASAT KHAN
+, (Member, IEEE)
+Department of Electrical and Computer Engineering, North South University, Dhaka 1229, Bangladesh
+Corresponding author: Riasat Khan (riasat.khan@northsouth.edu)
+ABSTRACT Root canal treatment involves the removal of inflamed pulp from infected teeth and sealing
+them to prevent re-entry of bacteria and infection. Early and accurate identification of root canal issues
+is crucial for improving treatment outcomes and minimizing complications. This study proposes a novel
+method for efficiently detecting failures in root canal treatments by incorporating image filtering techniques
+into deep learning models. A custom dataset has been collected from Square Hospital Ltd of Dhaka,
+Bangladesh, comprising 1,600 annotated, filtered radiographs. These images are processed using denoising
+algorithms (mean, median, Gaussian, contourlet transform, or Bayesian wavelet), non-local means, and
+BM3D. The YOLO models used for detection included YOLOv5, YOLOv7, and YOLOv8, with YOLOv5
+achieving the highest accuracy of 90.6% on the filtered datasets. This work integrates an autodistillation
+technique with Grounded SAM as the base model for bounding box generation, YOLOv8 as an intermediate
+model to bridge architectural differences, and YOLOv5 as the target model due to its lightweight design,
+fewer parameters, and superior performance on the filtered dataset. Knowledge distillation was employed to
+optimize performance on lightweight models, resulting in precision and recall values of 99.16% and 97.29%,
+respectively, for YOLOv5. The filtered datasets outperformed raw images, with the Bayesian wavelet and
+contourlet transform yielding the best results on YOLOv5. This pipeline demonstrates the potential to
+develop one of the most accurate and clinically applicable diagnostic tools for root canal failure detection by
+combining deep learning and knowledge distillation techniques with image filtering. This study demonstrates
+how combining deep learning with advanced image enhancement techniques can provide a highly accurate,
+clinically relevant tool for the early detection of root canal treatment failures, potentially aiding dentists in
+making faster and more consistent diagnoses.
+INDEX TERMS Root canal failure detection, filtered radiographs, YOLO models, knowledge distillation,
+image filtering techniques, deep learning in dentistry.
+I. INTRODUCTION
+Oral diseases are becoming increasingly common due to
+modern diets and other factors, with endodontic issues
+being a significant concern. According to the American
+Association of Endodontists, approximately 25 million root
+canal procedures are performed annually, averaging about
+41,000 per day or 287,000 per week [1]. Root canal treatment
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Prakasam Periasamy
+.
+involves removing the inflamed or infected pulp, cleaning and
+disinfecting the tooth, and sealing it with a cap to eliminate
+bacteria and prevent reinfection. This treatment is necessary
+when a cavity is too large and has reached the soft tissues of
+the tooth, causing pain when chewing or biting. An infected
+tooth can often be saved if diagnosed early enough to
+prevent more complex issues later [2]. Symptoms of infection
+include pain, swelling, loose gums, tooth discoloration, and
+loosening of the tooth due to the softening of the surrounding
+bone [3].
+VOLUME 13, 2025
+
+ 2025 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License.
+For more information, see https://creativecommons.org/licenses/by/4.0/ 66557
+--- Page 2 ---
+A. Z. Apurba et al.: Fusion of Image Filtering and Knowledge-Distilled YOLO Models
+Traditionally, dentists diagnose dental problems by eval-
+uating X-ray films. However, this approach is prone to
+errors due to technical issues, human errors and variations
+in light exposure, which can result in inaccurate human
+assessments. The need for dentists to perform lengthy
+procedures makes it challenging to identify healthy teeth
+suspected of infection accurately. Deep learning technology
+has significantly reduced errors at various stages, saving both
+time for patients and physicians. When performed accurately,
+AI-based X-ray analysis of infected teeth can determine
+whether an infected tooth can be saved or needs to be
+extracted. This technique leads to more cost-effective and
+faster treatments for patients [4].
+Image filtering is one of the fundamental techniques
+in image processing, aimed at improving the quality of
+X-ray imagery by preserving all relevant information [5].
+This technique eliminates noise, enhances feature detection,
+and normalizes variations in radiographic images, resulting
+in consistent outcomes within each filter category [6].
+The output of the filter depends on parameters such as
+the shape and size of the filter kernel. Research in AI
+applications for oral diseases has shown promising results.
+For example, Kaya et al. focused on detecting and classifying
+dental structures in pediatric radiographs using YOLOv4
+and CNN-based model designs [7]. Li et al. developed a
+tooth position detection method using Gaussian filtering
+and YOLOv4 techniques [8], while Chen et al. proposed
+registration methods for 3D detection of tooth cracks [9].
+Interestingly, these studies have provided some of the most
+relevant approaches to diagnosing and detecting features
+in oral health care. However, they did not apply filtering
+methods to improve performance, did not incorporate current
+or state-of-the-art techniques, and lacked sufficient normal-
+ization for model comparisons. Presented in Figure 1 is a
+mind map that illustrates the core concepts, relationships,
+and ideas explored in this research, serving as a visual
+representation of the study’s framework and key areas.
+FIGURE 1. Core areas of focus in dental imaging solutions.
+An advanced AI application in dentistry employs neural
+network models to identify various stages of root canal
+treatment. The proposed model compares the performance
+of raw and denoised images and aims to develop a reliable
+diagnostic tool that overcomes the limitations of traditional
+methods. This work promotes early detection and effective
+intervention by designing a neural network model specifically
+to identify the stages of root canal treatment.
+This work aims to develop a reliable diagnostic tool to
+improve early detection and outcomes of interventions in
+dentistry, demonstrating the following contributions.
+• A significant contribution of this work is to present a
+private dataset comprising 1,600 radiographic images
+collected from a local hospital in Dhaka, Bangladesh,
+representing various stages of root canal treatment.
+• Labeling of the images is performed using tools such as
+LabelImg for three-class images, with problematic teeth
+annotated using bounding boxes.
+• Denoising techniques, e.g., Mean, Median, Gaussian,
+and BM3D are applied to enhance image clarity and
+facilitate annotation. During training, both filtered and
+unfiltered images are compared.
+• Deep learning models (YOLOv5, YOLOv7, YOLOv8)
+are evaluated for reliability across metrics, including
+precision, recall, mAP, and accuracy.
+• A comparison of filtered images is conducted across
+models, and knowledge distillation employing Ground
+SAM, YOLOv8 and YOLOv5 models is applied to
+optimize performance. In the context of hierarchical
+knowledge distillation, we aim to transfer the learning
+from complex, large models to more lightweight models
+as efficiently as possible.
+The novelty of this research lies in the application of
+various filtering techniques and knowledge distillation-based
+deep learning methods to a private dataset consisting of 1,600
+radiographic root canal images.
+II. RELATED WORKS
+Radiographs are widely used for medical purposes, leading
+to an increase in the number of articles focused on
+X-ray detection. With advancements in artificial intelligence,
+computer vision and deep learning techniques have been
+applied in numerous studies for object detection and image
+segmentation. We describe some recent articles on radio-
+graphic detection and root canal identification using deep
+learning techniques.
+Table 1 summarizes the key methodological challenges,
+computational constraints, and interpretability issues of
+recent studies on automatic radiographic detection. The
+literature reviews highlight the extensive research on identi-
+fying various dental issues using deep learning techniques.
+However, several notable drawbacks remain in the use of
+advanced deep learning methods for detecting and classifying
+dental conditions. Earlier studies were primarily limited by
+smaller datasets, the absence of applying lightweight models,
+fewer experimental methods, and the absence of filtering or
+advanced techniques to improve results, as addressed in this
+study.
+III. MATERIALS AND METHODS
+A. RESEARCH DESIGN
+A comprehensive system has been implemented in this study
+utilizing deep learning models to effectively classify and
+detect root canal treatments. The process involves several
+steps, from data collection to model evaluation. The overall
+66558 VOLUME 13, 2025
+--- Page 3 ---
+A. Z. Apurba et al.: Fusion of Image Filtering and Knowledge-Distilled YOLO Models
+TABLE 1. Summary of studies on radiographic detection using deep learning techniques.
+workflow is illustrated in Figure 2, which summarizes various
+activities undertaken in this study.
+An extensive custom dataset was compiled by collecting
+radiographic images of various stages of root canal treat-
+ments. All images were sorted and selected based on clear
+visuals to meet the requirements of deep learning models
+and to standardize the data. Contouring was performed
+to mark the affected tooth, while extraneous parts were
+cropped and resized. Null or defective images were identified
+and removed. Additionally, normalization techniques were
+applied to enhance the intensity range of the images, ensuring
+that the dataset predominantly consisted of high-quality data
+for research.
+The annotated dataset was created in two phases. In the
+first phase, selected images were manually annotated by
+professional dentists. In the second phase, the same images
+were auto-annotated using a base model from the autodistill
+process. This model identified and classified the affected
+tooth using bounding boxes. After annotation, several denois-
+ing algorithms, including Gaussian, Bayesian wavelet, mean,
+and median filtering were applied to the images to improve
+clarity. Denoising filters were applied to make X-ray images
+clearer, helping the AI model detect treatment issues more
+accurately, i.e., just as a clearer image would help a dentist
+spot problems faster. Some noisy images were left untouched
+for comparison.
+All datasets underwent various augmentation procedures,
+including cropping, resizing, rotation, and flipping, to expand
+and balance the dataset. The final dataset was divided into
+a learning dataset (80%) and a testing dataset (20%). The
+VOLUME 13, 2025 66559
+--- Page 4 ---
+A. Z. Apurba et al.: Fusion of Image Filtering and Knowledge-Distilled YOLO Models
+FIGURE 2. Proposed root canal detection system’s working progressions.
+learning dataset was further split into a training dataset
+(75%) and a validation dataset (5%). YOLOv5, YOLOv7, and
+YOLOv8 deep learning models were employed to achieve
+highly accurate classification and detection. The models’
+performances were evaluated using mAP metrics, precision
+curves, and confusion matrix scores. The outputs of the
+models were then processed with auto-distillation, incor-
+porating the most effective filtering techniques. Grounded
+SAM served as the base model for generating annotated
+datasets, while YOLOv8 acted as the intermediate model,
+and YOLOv5 and YOLOv7 were used as the target models.
+After auto-distillation, all models were re-evaluated for their
+respective performances and compared to select the best
+model for root canal detection. The heatmap-based inference
+was made by reloading the best weight of the target model to
+visualize pixels contribution during prediction.
+B. DATASET
+The subsequent paragraphs describe the creation, preprocess-
+ing, and annotation of the dataset utilized in the research.
+1) DATASET COLLECTION
+Different stages of root canal treatment and their failures are
+to be detected using a large dataset of radiographic images.
+For this purpose, approximately 1,600 images were collected
+FIGURE 3. Sample images of the custom root canal failure detection
+dataset.
+in May - July 2024 at Square Hospital Ltd, one of the leading
+medical institutions in Bangladesh, with the assistance of an
+intraoral X-ray machine. Since only root canal-related images
+were captured, 1,253 images were selected after filtering out
+null and blurry images to ensure accurate documentation.
+This anonymized dataset, showcasing the complex structure
+of teeth, serves as the baseline for this study. Sample images
+from our dataset, representing the different stages of root
+canal treatment, are shown in Figure 3.
+2) DATASET CLASSES
+This section describes the organization of the images
+according to the various phases of the root canal treatment
+process. The dataset is divided into four distinct classes,
+each representing different stages of root canal treatment
+and failure, as determined with the assistance of professional
+dentists [20]. Radiographic images of teeth where the cavity
+66560 VOLUME 13, 2025
+--- Page 5 ---
+Error: 'charmap' codec can't encode character '\u2211' in position 3526: character maps to <undefined>

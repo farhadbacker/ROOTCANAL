@@ -1,0 +1,114 @@
+{
+  "available_models": {
+    "student_baseline": {
+      "name": "Student Baseline (YOLOv8n)",
+      "path": "dental_yolo.pt",
+      "description": "Original YOLOv8 nano model trained without knowledge distillation",
+      "use_filter": true,
+      "parameters": "6900000",
+      "expected_inference_time_ms": 45
+    },
+    "student_distilled": {
+      "name": "Hierarchical YOLOv5 (Distilled)",
+      "path": "hierarchical_results/3_final_v5n/weights/best.pt",
+      "description": "Final ultra-efficient YOLOv5 model distilled through the Model Ladder",
+      "use_filter": true,
+      "parameters": "2500000",
+      "expected_inference_time_ms": 30,
+      "improvement_metrics": {
+        "precision_gain": "63% boost in Teacher labels",
+        "distillation_alpha": 0.7
+      }
+    },
+    "student_distilled_v2": {
+      "name": "YOLOv8n Distilled V2 (Latest)",
+      "path": "distillation_results_v2/student_kd_true/weights/best.pt",
+      "description": "High-Precision Student Model (v2) with 64.4% Precision",
+      "use_filter": true,
+      "parameters": "3200000",
+      "expected_inference_time_ms": 45,
+      "improvement_metrics": {
+        "precision_gain": "+8.4% over v5n",
+        "distillation_alpha": 0.7
+      }
+    },
+    "teacher_model": {
+      "name": "Super-Teacher (YOLOv8m)",
+      "path": "hierarchical_results/1_teacher_v8m/weights/best.pt",
+      "description": "Teacher model trained on high-fidelity Grounded SAM labels",
+      "use_filter": true,
+      "parameters": "25900000",
+      "expected_inference_time_ms": 85
+    },
+    "ensemble": {
+      "name": "Consensus Ensemble (v8m + v8n + v5n)",
+      "paths": [
+        "hierarchical_results/1_teacher_v8m/weights/best.pt",
+        "hierarchical_results/2_intermediate_v8n/weights/best.pt",
+        "hierarchical_results/3_final_v5n/weights/best.pt"
+      ],
+      "description": "High-precision mode: 99% precision goal by requiring consensus between multiple models",
+      "use_filter": true,
+      "parameters": "34000000 (aggregate)",
+      "expected_inference_time_ms": 160
+    },
+    "normal_rcnn": {
+      "name": "Standard Faster R-CNN (Baseline)",
+      "path": "faster_rcnn_root_canal.pt",
+      "description": "Baseline Faster R-CNN model trained without custom dental anchors",
+      "use_filter": true,
+      "parameters": "41000000",
+      "expected_inference_time_ms": 110
+    },
+    "optimized_rcnn": {
+      "name": "Optimized Faster R-CNN (ResNet50v2)",
+      "path": "optimized_rcnn_best.pt",
+      "description": "Custom R-CNN trained with dental anchors and medical augmentations",
+      "use_filter": true,
+      "parameters": "41000000",
+      "expected_inference_time_ms": 110
+    },
+    "latest_yolo11": {
+      "name": "Latest YOLO (YOLO11n Fine-Tuned)",
+      "path": "dental_yolo11_custom.pt",
+      "description": "The latest YOLO11 nano model fine-tuned on the custom dental dataset.",
+      "use_filter": true,
+      "parameters": "2600000",
+      "expected_inference_time_ms": 25
+    },
+    "latest_yolo11_ensemble_distilled": {
+      "name": "Latest YOLO (YOLO11n Ensemble Fast)",
+      "path": "dental_yolo11_ensemble_distilled.pt",
+      "description": "The latest YOLO11 nano model distilled from the consensus ensemble.",
+      "use_filter": true,
+      "parameters": "2600000",
+      "expected_inference_time_ms": 25
+    }
+  },
+  "default_model": "student_distilled_v2",
+  "inference_settings": {
+    "confidence_threshold": 0.25,
+    "iou_threshold": 0.45,
+    "max_detections": 100,
+    "image_size": 640
+  },
+  "preprocessing": {
+    "contourlet_enabled": true,
+    "contourlet_levels": 2,
+    "contourlet_directions": 8,
+    "normalize_input": true
+  },
+  "class_mapping": {
+    "0": "No Endodontic Treatment",
+    "1": "Incomplete Endodontic Treatment",
+    "2": "Complete Endodontic Treatment",
+    "3": "Total Endodontic Failure"
+  },
+  "performance_notes": {
+    "distillation_benefits": "Knowledge distillation transfers teacher knowledge to smaller student model, improving accuracy with minimal parameter increase",
+    "filtering_benefits": "Contourlet filtering enhances image quality and features relevant to root canal pathology detection",
+    "recommended_deployment": "student_distilled for best accuracy-efficiency trade-off",
+    "gpu_recommended": true,
+    "inference_device": "auto"
+  }
+}

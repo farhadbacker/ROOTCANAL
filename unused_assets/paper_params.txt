@@ -1,0 +1,20 @@
+--------------------------------------------------
+> This work integrates an autodistillation technique with Grounded SAM as the base model for bounding box generation, YOLOv8 as an intermediate model to bridge architectural differences, and YOLOv5 as the target model due to its lightweight design, fewer parameters, and superior performance on the filtered dataset
+
+> Knowledge distillation was employed to optimize performance on lightweight models, resulting in precision and recall values of 99
+
+> This pipeline demonstrates the potential to develop one of the most accurate and clinically applicable diagnostic tools for root canal failure detection by combining deep learning and knowledge distillation techniques with image filtering
+
+> INDEX TERMS Root canal failure detection, filtered radiographs, YOLO models, knowledge distillation, image filtering techniques, deep learning in dentistry
+
+> A comparison of filtered images is conducted across models, and knowledge distillation employing Ground SAM, YOLOv8 and YOLOv5 models is applied to optimize performance
+
+> In the context of hierarchical knowledge distillation, we aim to transfer the learning from complex, large models to more lightweight models as efficiently as possible
+
+> The novelty of this research lies in the application of various filtering techniques and knowledge distillation-based deep learning methods to a private dataset consisting of 1,600 radiographic root canal images
+
+> The outputs of the models were then processed with auto-distillation, incor- porating the most effective filtering techniques
+
+> After auto-distillation, all models were re-evaluated for their respective performances and compared to select the best model for root canal detection
+
+--------------------------------------------------
